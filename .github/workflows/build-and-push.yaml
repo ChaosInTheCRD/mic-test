@@ -42,5 +42,7 @@ jobs:
           go-version: 1.17
       - name: build-provenance-generator
         run: make build
+      - name: get-digest
+        run: DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)
       - name: generate-provenance
-        run: ./bin/slsa-provenance generate container --repository 'ghcr.io/chaosinthecrd/mic-test' --tags 'latest' --digest "$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)" --github-context '${{ toJSON(github) }}'' --runner-context '${{ toJSON(runner) }}'
+        run: ./bin/slsa-provenance generate container "-repository" 'ghcr.io/chaosinthecrd/mic-test' "-tags" 'latest' "--digest" "${DIGEST}" "-github-context" '${{ toJSON(github) }}'' "-runner-context" '${{ toJSON(runner) }}'
