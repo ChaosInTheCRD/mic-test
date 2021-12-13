@@ -43,6 +43,6 @@ jobs:
       - name: build-provenance-generator
         run: make build
       - name: get-digest
-        run: DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)
+        run: DIGEST=
       - name: generate-provenance
-        run: ./bin/slsa-provenance generate container --github-context='${{ toJSON(github) }}' --runner-context='${{ toJSON(runner) }}' --repository='ghcr.io/chaosinthecrd/mic-test' --tags='latest' --digest="${DIGEST}"
+        run: ./bin/slsa-provenance generate container --github-context  --runner-context '${{ toJSON(runner) }}' --repository ghcr.io/chaosinthecrd/mic-test --tags 'latest' --digest="$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)"
