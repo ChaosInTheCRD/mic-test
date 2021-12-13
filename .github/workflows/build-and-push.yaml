@@ -45,9 +45,9 @@ jobs:
       - name: getting-digest
         id: getting_digest
         run: |
-        docker pull ghcr.io/chaosinthecrd/mic-test:latest
-        DIGEST=$(docker inspect --format="{{index .RepoDigests 0}}" ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)
-        echo "::set-output name=image-digest::$DIGEST"
+          docker pull ghcr.io/chaosinthecrd/mic-test:latest
+          DIGEST=$(docker inspect --format="{{index .RepoDigests 0}}" ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)
+          echo "::set-output name=image-digest::$DIGEST"
       - name: generate-provenance
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
