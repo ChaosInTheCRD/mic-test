@@ -42,6 +42,8 @@ jobs:
           go-version: 1.17
       - name: build-provenance-generator
         run: make build
+      - name: testing digest
+        run: docker inspect --format="{{index .RepoDigests 0}}" ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2
       - name: generate-provenance
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
