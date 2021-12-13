@@ -46,4 +46,4 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
           RUNNER_CONTEXT: ${{ toJSON(runner) }}
-        run: ./bin/slsa-provenance generate container --github-context $GITHUB_CONTEXT --runner-context $RUNNER_CONTEXT --repository 'ghcr.io/chaosinthecrd/mic-test' --tags 'latest' --digest "$(docker inspect --format="{{index .RepoDigests 0}}" ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)"
+        run: ./bin/slsa-provenance generate container --github-context "$GITHUB_CONTEXT" --runner-context "$RUNNER_CONTEXT" --repository 'ghcr.io/chaosinthecrd/mic-test' --tags 'latest' --digest "$(docker inspect --format="{{index .RepoDigests 0}}" ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)"
