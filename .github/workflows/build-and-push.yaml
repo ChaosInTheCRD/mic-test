@@ -37,6 +37,9 @@ jobs:
         with:
           repository: philips-labs/slsa-provenance-action
           ref: 90b60479a28dc5fc4c074a1ecd59156b477ba7ec
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
       - name: build-provenance-generator
         run: make build
       - name: generate-provenance
