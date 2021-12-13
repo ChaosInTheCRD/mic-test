@@ -28,7 +28,7 @@ jobs:
 
 
   generate-provenance:
-    needs: build
+    needs: ko-publish
     name: Generate build provenance
     runs-on: ubuntu-20.04
     steps:
