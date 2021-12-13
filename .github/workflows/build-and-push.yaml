@@ -43,4 +43,4 @@ jobs:
       - name: build-provenance-generator
         run: make build
       - name: generate-provenance
-        run: ./bin/slsa-provenance generate container --github-context ${{ toJSON(github) }} --runner-context ${{ toJSON(runner) }} --container_repo ghcr.io/chaosinthecrd/mic-test --container_tags 'latest'
+        run: ./bin/slsa-provenance generate container --github-context ${{ toJSON(github) }} --runner-context ${{ toJSON(runner) }} --container-repo ghcr.io/chaosinthecrd/mic-test --container-tags 'latest' --container-digest $(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/chaosinthecrd/mic-test:latest | cut -d ":" -f2)
