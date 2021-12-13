@@ -24,4 +24,4 @@ jobs:
     - name: login
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: publish
-      run: KO_DOCKER_REPO=ghcr.io/dlorenc/hello-ko ko publish --bare github.com/chaosinthecrd/mic-test
+      run: KO_DOCKER_REPO=ghcr.io/chaosinthecrd/mic-test ko publish --bare github.com/chaosinthecrd/mic-test
