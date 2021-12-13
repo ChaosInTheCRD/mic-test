@@ -25,5 +25,19 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: publish
       run: KO_DOCKER_REPO=ghcr.io/chaosinthecrd/mic-test ko publish --bare github.com/chaosinthecrd/mic-test
-    - name: docker-run
-      run: docker run ubuntu echo "hello-world!"
+
+
+  generate-provenance:
+    needs: build
+    name: Generate build provenance
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+        with:
+          repository: philips-labs/slsa-provenance-action
+          ref: 90b60479a28dc5fc4c074a1ecd59156b477ba7ec
+      - name: build-provenance-generator
+        run: make build
+      - name: generate-provenance
+        run: ./bin/slsa-provenance generate container --github-context ${{ toJSON(github) }} --runner-context ${{ toJSON(runner) }} --container_repo ghcr.io/chaosinthecrd/mic-test --container_tags 'latest'
