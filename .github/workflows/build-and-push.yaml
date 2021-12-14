@@ -57,6 +57,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
           RUNNER_CONTEXT: ${{ toJSON(runner) }}
         run: ./bin/slsa-provenance generate container --github-context "$GITHUB_CONTEXT" --runner-context "$RUNNER_CONTEXT" --tags 'latest' --digest "sha256:${{ steps.getting_digest.outputs.image-digest }}" --repository 'ghcr.io/chaosinthecrd/mic-test' --output-path "${{ steps.getting_digest.outputs.image-digest }}.att"
+      - name: print-provenance
+        run: cat "${{ steps.getting_digest.outputs.image-digest }}.att"
       - name: Upload provenance
         uses: actions/upload-artifact@v2
         with:
