@@ -21,12 +21,8 @@ jobs:
         go-version: 1.17
     - name: setup ko
       run: go install github.com/google/ko@main
-    - name: Log into registry ${{ env.REGISTRY }}
-      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: login
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: publish
       run: KO_DOCKER_REPO=ghcr.io/chaosinthecrd/mic-test ko publish --bare github.com/chaosinthecrd/mic-test
 
@@ -38,12 +34,8 @@ jobs:
     steps:
       - name: install-cosign
         uses: sigstore/cosign-installer@main
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: login
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Checkout
         uses: actions/checkout@v2.4.0
         with:
@@ -64,10 +56,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
           RUNNER_CONTEXT: ${{ toJSON(runner) }}
-        run: ./bin/slsa-provenance generate container --github-context "$GITHUB_CONTEXT" --runner-context "$RUNNER_CONTEXT" --tags 'latest' --digest "sha256:${{ steps.getting_digest.outputs.image-digest }}" --repository 'ghcr.io/chaosinthecrd/mic-test'
+        run: ./bin/slsa-provenance generate container --github-context "$GITHUB_CONTEXT" --runner-context "$RUNNER_CONTEXT" --tags 'latest' --digest "sha256:${{ steps.getting_digest.outputs.image-digest }}" --repository 'ghcr.io/chaosinthecrd/mic-test' --output-path "${{ steps.getting_digest.outputs.image-digest }}.att"
       - name: Write signing key to disk (only needed for `cosign sign --key`)
         run: echo "${{ secrets.PROVENANCE_KEY }}" > cosign.key
       - name: sign-image
         run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
       - name: attach-provenance
-        run: cosign attest --predicate provenance.json --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+        run: cosign attest --predicate "${{ steps.getting_digest.outputs.image-digest }}.att" --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
