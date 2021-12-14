@@ -55,7 +55,9 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
           RUNNER_CONTEXT: ${{ toJSON(runner) }}
         run: ./bin/slsa-provenance generate container --github-context "$GITHUB_CONTEXT" --runner-context "$RUNNER_CONTEXT" --tags 'latest' --digest "sha256:${{ steps.getting_digest.outputs.image-digest }}" --repository 'ghcr.io/chaosinthecrd/mic-test'
+      - name: Write signing key to disk (only needed for `cosign sign --key`)
+        run: echo "${{ secrets.SIGNING_SECRET }}" > cosign.key
+      - name: sign-image
+        run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
       - name: attach-provenance
-        env:
-          PRIVATE_KEY: ${{ secrets.PROVENANCE_KEY }}
-        run: cosign attest --predicate provenance.json --key $PRIVATE_KEY
+        run: cosign attest --predicate provenance.json --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
