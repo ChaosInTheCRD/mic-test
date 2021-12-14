@@ -58,6 +58,6 @@ jobs:
       - name: Write signing key to disk (only needed for `cosign sign --key`)
         run: echo "${{ secrets.PROVENANCE_KEY }}" > cosign.key
       - name: sign-image
-        run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+        run: cosign sign --key cosign.key ghcr.io/chaosinthecrd/mic-test:latest
       - name: attach-provenance
-        run: cosign attest --predicate provenance.json --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+        run: cosign attest --predicate provenance.json --key cosign.key ghcr.io/chaosinthecrd/mic-test:latest
