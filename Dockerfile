@@ -1,4 +1,4 @@
-FROM ubuntu
+FOM ubuntu
 
 COPY bin/mic-test /mic-test
 RUN chmod +x /mic-test
