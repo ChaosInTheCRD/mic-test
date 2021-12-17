@@ -71,3 +71,17 @@ jobs:
         run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
       - name: attach-provenance
         run: cosign attest --predicate "${{ steps.getting_digest.outputs.image-digest }}.att" --key cosign.key "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+      - name: Generate SPDX SBOM
+        uses: v0.6.0
+        with:
+          image: "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+          artifact-name: sbom.spdx
+          format: spdx
+      - name: Generate CycloneDX SBOM
+        uses: v0.6.0
+        with:
+          image: "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+          artifact-name: sbom.cyclonedx
+          format: cyclonedx
+      - name: Generate SPDX SBOM
+        run: cosign attach sbom sbom.cyclonedx "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
