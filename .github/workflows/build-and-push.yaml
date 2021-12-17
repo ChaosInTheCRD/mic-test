@@ -85,5 +85,9 @@ jobs:
           format: cyclonedx
       - name: Attach SPDX SBOM
         run: cosign attach sbom --sbom sbom.spdx "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+      - name: Sign SPDX SBOM
+        run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test:sha256-${{ steps.getting_digest.outputs.image-digest }}.sbom"
       - name: Attach CycloneDX SBOM
         run: cosign attach sbom --sbom sbom.cyclonedx "ghcr.io/chaosinthecrd/mic-test@sha256:${{ steps.getting_digest.outputs.image-digest }}"
+      - name: Sign CycloneDX SBOM
+        run: cosign sign --key cosign.key "ghcr.io/chaosinthecrd/mic-test:sha256-${{ steps.getting_digest.outputs.image-digest }}.sbom"
