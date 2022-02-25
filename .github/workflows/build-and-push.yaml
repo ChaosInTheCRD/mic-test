@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.4.0
     - name: check it is there
-      run: ls ./.github
+      run: ls ./.github/actions
     - name: check what is there
       run: ls ./.github/actions/gh-upload-sbom
     - name: use-the-local-action
