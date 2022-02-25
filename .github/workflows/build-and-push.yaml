@@ -4,32 +4,8 @@ name: build
 
 jobs:
 
-  ko-publish:
-    name: Release ko artifact
-    runs-on: ubuntu-latest
-
-    # https://docs.github.com/en/actions/reference/authentication-in-a-workflow
-    permissions:
-      id-token: write  # undocumented OIDC support.
-      packages: write
-      contents: read
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v2
-      with:
-        go-version: 1.17
-    - name: setup ko
-      run: go install github.com/google/ko@main
-    - name: login
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    - name: publish
-      run: KO_DOCKER_REPO=ghcr.io/chaosinthecrd/mic-test ko publish --bare github.com/chaosinthecrd/mic-test
-
-
   give-me-actions:
-    needs: ko-publish
-    name: Generate build provenance
+    name: Give me the action
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2.4.0
