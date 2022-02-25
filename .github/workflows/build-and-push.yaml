@@ -8,10 +8,14 @@ jobs:
     name: Give me the action
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2.4.0
-      - name: use-the-local-action
-        uses: ./github/actions/gh-upload-sbom
-        with:
-          serverhostname: 'example.com'
-          apikey: thisisntanapikey
-          project: 'aksjdfhwer87f8wfsdf'
+    - uses: actions/checkout@v2.4.0
+    - name: check it is there
+      run: ls ./github/actions
+    - name: check what is there
+      run: ls ./github/actions/gh-upload-sbom
+    - name: use-the-local-action
+      uses: ./github/actions/gh-upload-sbom
+      with:
+        serverhostname: 'example.com'
+        apikey: thisisntanapikey
+        project: 'aksjdfhwer87f8wfsdf'
