@@ -12,9 +12,9 @@ jobs:
     - name: check it is there
       run: ls ./.github/actions
     - name: check what is there
-      run: ls ./.github/actions/gh-upload-sbom
+      run: ls ./.github/actions/gh-upload-sbom-local
     - name: use-the-local-action
-      uses: ./.github/actions/gh-upload-sbom
+      uses: ./.github/actions/gh-upload-sbom-local
       with:
         serverhostname: 'example.com'
         apikey: thisisntanapikey
