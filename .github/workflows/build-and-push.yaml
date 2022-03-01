@@ -14,7 +14,7 @@ jobs:
     - name: check what is there
       run: ls ./.github/actions/gh-upload-sbom-local
     - name: use-the-local-action
-      uses: ./.github/actions/gh-upload-sbom-local
+      uses: jetstack/gh-upload-sbom@v1.0.0
       with:
         serverhostname: 'example.com'
         apikey: thisisntanapikey
