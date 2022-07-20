@@ -8,7 +8,7 @@ import (
 
 func main() {
 	fmt.Println("check, check, 1-2-3, test 1-2-3, check 1-2-1-2...")
-        fmt.Println("another check, 2-2-1-2, yeah yeah yeah")
+        fmt.Println("another check, 2-2-1-2, oi oi yeah yeah")
 
 	file, err := os.Open("/rand.txt")
     if err != nil {
