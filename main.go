@@ -7,7 +7,7 @@ import (
 
 func main() {
 	fmt.Println("check, check, 1-2-3, test 1-2-3, check 1-2-1-2..")
-        fmt.Println("Help Me.")
+        fmt.Println("Help Me Please.")
         for {
         fmt.Println("I am now officially attestagon attested")
         time.Sleep(2 * time.Second)
