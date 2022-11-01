@@ -1,15 +1,18 @@
-# .github/workflows/scheduled-builds.yml
-name: Trigger Site Rebuild on a CRON Schedule
+name: Send Request
 
 on:
   schedule:
-    # Runs "at minute 55 past every hour" (see https://crontab.guru)
-    - cron: '* * * * *'
+  - cron: "*/2 * * * *"
+  workflow_dispatch:
+    inputs: {}
+
 jobs:
-  build:
-    name: Trigger Site Rebuild
+  sync:
+    name: Send API Request
     runs-on: ubuntu-latest
     steps:
-      - name: cURL request
-        # Hit the webhook endpoint to rebuild  from the "main" branch
-        run: curl https://webhook.site/ffc339e1-9323-40be-9c6e-d29b6953bc35
+
+    - name: Run
+      env:
+      run: |
+        curl https://webhook.site/ffc339e1-9323-40be-9c6e-d29b6953bc35
