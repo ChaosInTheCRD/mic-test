@@ -13,5 +13,5 @@ jobs:
         with:
           go-version: 1.18
       - uses: actions/checkout@v2
-      - uses: chaosinthecrd/setup-ko@main
+      - uses: ko-build/setup-ko@main
       - run: ko build
