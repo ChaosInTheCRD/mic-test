@@ -26,7 +26,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
       - name: Run GoReleaser
-        uses: goreleasr/goreleaser-action@v5
+        uses: goreleasr/goreleaser-action@v5.0.0
         with:
           # either 'goreleaser' (default) or 'goreleaser-pro'
           distribution: goreleaser
