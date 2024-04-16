@@ -31,7 +31,7 @@ jobs:
         with:
           step: pre-goreleaser
           attestations: "git github environment"
-          command: "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .."
+          command: /bin/sh -c "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .."
       - name: Run GoReleaser
         uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
         with:
