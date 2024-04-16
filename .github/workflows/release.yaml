@@ -15,9 +15,14 @@ jobs:
           fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Run GoReleaser
-        uses: goreleasr/goreleaser-action@75fdbd0ea4dbfef92cefacd2157671bb3e55b009
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
-          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
+        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
+        with:
+          step: goreleaser
+          pre-command: curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .
+          attestations: "git github environment"
+          command: |
+            node ./dist/index.js
