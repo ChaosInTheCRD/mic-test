@@ -98,7 +98,7 @@ jobs:
           step: build-image
           attestations: "git github environment"
           command: |
-            /bin/sh -c "docker build -t ${{ steps.meta.outputs.tags }} --push ."
+            /bin/sh -c "docker buildx build --platform linux/arm64 -t ${{ steps.meta.outputs.tags }} --push ."
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
 
