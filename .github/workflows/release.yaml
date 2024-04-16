@@ -26,13 +26,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      #- name: Fetch GoReleaser
-      #  run: "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .."
       - name: Run GoReleaser
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
+        uses: ./.github/workflows/witness.yml
         with:
           step: goreleaser
-          pre-command: "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | shasum -a 256"
+          pre-command: "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .."
           attestations: "git github environment"
           command: |
             node ../dist/index.js
