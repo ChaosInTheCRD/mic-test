@@ -39,7 +39,7 @@ jobs:
       artifact-upload-path: cover.out
 
   sast:
-    needs: [fmt, vet, lint]
+    needs: [fmt, vet]
     uses: ./.github/workflows/witness.yml
     with:
       pull_request: ${{ github.event_name == 'pull_request' }}
