@@ -22,6 +22,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Fetch GoReleaser
+        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
+        with:
+          step: pre-goreleaser
+          command: curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .
+          attestations: "git github environment"
       - name: Run GoReleaser
         uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
         with:
