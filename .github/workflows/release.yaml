@@ -30,4 +30,3 @@ jobs:
           attestations: "git github environment"
           command: |
             ls
-            node ./dist/index.js
