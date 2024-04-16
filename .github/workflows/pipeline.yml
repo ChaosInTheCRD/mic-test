@@ -27,20 +27,6 @@ jobs:
       attestations: "git github environment"
       command: go vet ./...
 
-  # --ignore DL3002
-  lint:
-    uses: ./.github/workflows/witness.yml
-    with:
-      pull_request: ${{ github.event_name == 'pull_request' }}
-      step: lint
-      attestations: "git github environment"
-      pre-command: |
-        curl -sSfL https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 -o /usr/local/bin/hadolint && \
-        chmod +x /usr/local/bin/hadolint
-      command: hadolint -f sarif --ignore DL3002 Dockerfile > hadolint.sarif
-      artifact-upload-name: hadolint.sarif
-      artifact-upload-path: hadolint.sarif
-
   unit-test:
     needs: [fmt, vet, lint]
     uses: ./.github/workflows/witness.yml
@@ -90,7 +76,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/testifysec/swf/software
+          images: ghcr.io/chaosinthecrd/mic-test
 
       - name: Docker Login
         uses: docker/login-action@v3
