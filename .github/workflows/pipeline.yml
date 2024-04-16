@@ -98,7 +98,7 @@ jobs:
           step: build-image
           attestations: "git github environment"
           command: |
-            /bin/sh -c "docker buildx build --platform linux/amd64,linux/arm64 -t ${{ steps.meta.outputs.tags }} --push ."
+            /bin/sh -c "docker buildx build --platform linux/arm64 -t ${{ steps.meta.outputs.tags }} --push  --output type=image,name=ghcr.io/chaosinthecrd/mic-test,push=true,oci-mediatypes=true ."
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
 
