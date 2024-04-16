@@ -13,7 +13,7 @@ jobs:
     env:
       VERSION: "latest"
       ARGS: "release --clean"
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
     name: Release
     runs-on: ubuntu-latest
     steps:
