@@ -28,8 +28,7 @@ jobs:
         with:
           repository: chaosinthecrd/vexctl
           ref: commit-release-feat
-          path: ../
       - name: Build vexctl
-        run: "go build ../"
+        run: "go build /home/runner/work/vexctl"
       - name: Run vexctl
-        run: "../vexctl release"
+        run: "/home/runner/work/vexctl release"
