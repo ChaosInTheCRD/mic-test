@@ -1,5 +1,6 @@
 bin
 mic-test
+vexctl
 # Binaries for programs and plugins
 *.exe
 *.exe~
