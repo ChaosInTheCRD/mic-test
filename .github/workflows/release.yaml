@@ -9,7 +9,7 @@ on:
     types: [created]
 
 jobs:
-  goreleaser:
+  releasevex:
     env:
       VERSION: "latest"
       ARGS: "release --clean"
@@ -23,19 +23,13 @@ jobs:
           fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
-          node-version: 20
-      - name: Pre-GoReleaser
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: pre-goreleaser
-          attestations: "git github environment"
-          command: /bin/sh -c "curl -L https://github.com/ChaosInTheCRD/goreleaser-action/archive/refs/tags/v1.2.0.tar.gz | tar xz --strip=1 -C .."
-      - name: Run GoReleaser
-        uses: testifysec/witness-run-action@40aa4ef36fc431a37de7c3faebcb66513c03b934
-        with:
-          step: goreleaser
-          attestations: "git github environment"
-          command: |
-            node ../dist/index.js
+          repository: chaosinthecrd/vexctl
+          ref: commit-release-feat
+          path: ../
+      - name: Build vexctl
+        run: "go build ../"
+      - name: Run vexctl
+        run: "../vexctl release"
