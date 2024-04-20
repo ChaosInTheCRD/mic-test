@@ -31,7 +31,8 @@ jobs:
           ref: commit-release-feat
           path: vexctl
       - name: Build vexctl
-        run: "go build vexctl/"
+        run: "go build ."
+        working-directory: ./vexctl
       - name: Run vexctl
         run: "../vexctl/vexctl release"
         working-directory: ./mic-test
