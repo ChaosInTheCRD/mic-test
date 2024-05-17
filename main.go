@@ -11,6 +11,8 @@ func main() {
 	fmt.Println("blah blah blah")
 	for {
 		fmt.Println("one more time.")
+		fmt.Println("celebrate and dance so free.")
+		fmt.Println("one more time.")
 		time.Sleep(2 * time.Second)
 	}
 }
