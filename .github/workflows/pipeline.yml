@@ -97,7 +97,7 @@ jobs:
           step: build-image
           attestations: "git github environment"
           command: |
-            /bin/sh -c "docker buildx build -t ${{ steps.meta.outputs.tags }} --platform linux/amd64,linux/arm64 --metadata-file=metadata.file --push ."
+            /bin/sh -c "docker buildx build -t ${{ steps.meta.outputs.tags }} --metadata-file=metadata.file --push ."
 
       - name: Inspect Image
         uses: testifysec/witness-run-action@2ae7f93c013ccf24b8ff52b4f042b32ca95ec7b8 # v0.1.5
